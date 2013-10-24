@@ -1,20 +1,10 @@
-$(document).ready(function() {
-	/*
-	var data, template;
-	data = { title: "Roland's Book", body: "This is the best one ever" };
-	template = $(Handlebars.templates.test(data));
-	$('body').append(template);
-	
-	$.ajax({
-			url : 'http://localhost:3000/users/2.json',
-			success : function(data) {
-				var template = $(Handlebars.templates.user(data));
-				$('body').append(template);
-			}
-		});
-		//*/
-	var userForm, userFields;
-	userFields = Handlebars.templates.user_form();
-	userForm = Handlebars.templates.form_create({ content: userFields });
-	$($$MCSelect.mainContainer).append($(userForm));
-});
+$$MC.Controllers.AdminController = $$MC.Controllers.AdminController || function AdminController() {};
+$$MCAdminController = $$MC.Controllers.AdminController;
+
+/**
+ * "Static" main function. Kicks off the program. No 'this' context.
+ */
+$$MCAdminController.main = function AdminController$main() {
+	var $userEditor = $$MCUserController.getEditor$();
+	$$MCUtilities.setMainContent($userEditor);
+};

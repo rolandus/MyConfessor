@@ -6,15 +6,27 @@
 		<script src="../assets/scripts/constants.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../assets/templates/shared_templates.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../assets/templates/admin_templates.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../assets/scripts/controllers/UserController.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../assets/scripts/controllers/AdminController.js" type="text/javascript" charset="utf-8"></script>
+		<title>MyConfessor Admin</title>
 	</head>
 	<body>
-		<h1>MyConfessor.org</h1>
-		<h2>Administrator</h2>
-		<div id="header_container" />
+		<div id="header_container">
+			<h1>MyConfessor.org</h1>
+			<h2>Administrator</h2>
+		</div>
 		
-		<div id="main_container" />
+		<div id="main_container"></div>
 		
-		<div id="footer_container" />
+		<div id="footer_container">
+			<a href="#" data-action="verify_accounts">Verify Account Requests</a>
+			<a href="#" data-action="manage_accounts">Manage Accounts</a>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$$MC.Controllers.AdminController.main();
+			});
+		</script>
 	</body>
 </html>
