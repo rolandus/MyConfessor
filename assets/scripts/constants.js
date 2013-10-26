@@ -7,14 +7,16 @@ $$MC.Constants = $$MC.Constants || {};
 
 //TODO In this case, it might be better to have utility functions to update the contents of these sections.
 $$MC.Constants.Selectors = $$MC.Constants.Selectors || {};
-$$MCSelect = $$MC.Constants.Selectors;
+var $$MCSelect = $$MC.Constants.Selectors;
 
 $$MCSelect.mainContainer = '#main_container';
 $$MCSelect.footerContainer = '#footer_container';
 $$MCSelect.headerContainer = '#header_container';
 
 $$MC.Utilities = $$MC.Utilities || {};
-$$MCUtilities = $$MC.Utilities;
+var $$MCUtilities = $$MC.Utilities;
+
+var MCTemplates = MCTemplates || {};
 
 $$MCUtilities.Private = $$MCUtilities.Private || {};
 /**

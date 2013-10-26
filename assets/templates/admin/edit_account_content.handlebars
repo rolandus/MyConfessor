@@ -1,0 +1,61 @@
+<form action="#" method="post">
+    <h2>Account</h2>
+        <fieldset data-role="controlgroup" data-type="horizontal" >
+            <legend>Account Status:</legend>
+            <input type="radio" name="account_status" id="account_status_1" value="1" checked="checked" />
+            <label for="account_status_1">Active</label>
+            
+            <input type="radio" name="account_status" id="account_status_2" value="2" />
+            <label for="account_status_2">Inactive</label>
+        </fieldset>
+        <fieldset data-role="controlgroup" data-type="horizontal" >
+           <legend>Account Role:</legend>
+           <input type="checkbox" name="account_role_1" id="account_role_1" class="custom" />
+           <label for="account_role_1">Priest</label>
+
+           <input type="checkbox" name="account_role_2" id="account_role_2" class="custom" />
+           <label for="account_role_2">Administrator</label>
+        </fieldset>
+        <fieldset data-role="controlgroup" data-type="horizontal" >
+            <legend>Password:</legend>
+            <button type="button">Reset</button>
+        </fieldset>
+    
+    <h2>Name</h2>
+            <label for="name">First:</label>
+            <input type="text" name="name" id="name" value=""  />
+            <label for="name">Last:</label>
+            <input type="text" name="name" id="name" value=""  />
+           <label for="select-choice-1" class="select">Office:</label>
+           <select name="select-choice-1" id="select-choice-1">
+              <option value="standard">Priest</option>
+              <option value="rush">Bishop</option>
+              <option value="express">Cardinal</option>
+              <option value="overnight">Pope</option>
+           </select>
+            <label for="name">Salutation:</label>
+            <input type="text" name="name" id="name" value=""  />
+    
+    <h2>Contact Info</h2>
+            <label for="home-phone">Home phone:</label>
+            <input type="tel" name="name" id="home-phone" value=""  />
+            
+            <label for="mobile-phone">Mobile phone:</label>
+            <input type="tel" name="name" id="mobile-phone" value=""  />
+            
+            <label for="email">Email:</label>
+            <input type="email" name="name" id="email" value=""  />
+            
+            <label for="street">Street address:</label>
+            <textarea name="street" id="street"></textarea>
+            
+            <label for="diocese">Diocese:</label>
+            <input type="text" name="diocese" id="diocese" value=""  />
+
+            <label for="diocese">Parish:</label>
+            <input type="text" name="parish" id="parish" value=""  />
+
+    
+    <h2>About Me</h2>
+        <textarea name="about-me" id="about-me"></textarea>
+</form>
