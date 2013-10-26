@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Get Dioceses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    </head>
+    <body>
+        <script>
+        
+        var states = {
+      Alabama: 'AL',
+      Alaska: 'AK',
+      Arizona: 'AZ',
+      Arkansas: 'AR',
+      California: 'CA',
+      Colorado: 'CO',
+      Connecticut: 'CT',
+      Delaware: 'DE',
+      District_of_Columbia: 'DC',
+      Florida: 'FL',
+      Georgia: 'GA',
+      Hawaii: 'HI',
+      Idaho: 'ID',
+      Illinois: 'IL',
+      Indiana: 'IN',
+      Iowa: 'IA',
+      Kansas: 'KS',
+      Kentucky: 'KY',
+      Louisiana: 'LA',
+      Maine: 'ME',
+      Maryland: 'MD',
+      Massachusetts: 'MA',
+      Michigan: 'MI',
+      Minnesota: 'MN',
+      Mississippi: 'MS',
+      Missouri: 'MO',
+      Montana: 'MT',
+      Nebraska: 'NE',
+      Nevada: 'NV',
+      New_Hampshire: 'NH',
+      New_Jersey: 'NJ',
+      New_Mexico: 'NM',
+      New_York: 'NY',
+      North_Carolina: 'NC',
+      North_Dakota: 'ND',
+      Ohio: 'OH',
+      Oklahoma: 'OK',
+      Oregon: 'OR',
+      Pennsylvania: 'PA',
+      Puerto_Rico: 'PR',
+      Rhode_Island: 'RI',
+      South_Carolina: 'SC',
+      South_Dakota: 'SD',
+      Tennessee: 'TN',
+      Texas: 'TX',
+      Utah: 'UT',
+      Vermont: 'VT',
+      Virginia: 'VA',
+      Washington: 'WA',
+      West_Virginia: 'WV',
+      Wisconsin: 'WI',
+      Wyoming: 'WY'
+    };
+        
+        
+            function main() {
+                $.get( "./diocese_original.html", function( data ) { 
+                    var expression, i, key, results, dioceses;
+                    expression = /(Diocese (\s|\.|[a-zA-Z])*)|(Archdiocese (\s|\.|[a-zA-Z])*)|"statename">(\s|[a-zA-Z])*</mg;
+                    results = data.match(expression);
+                    dioceses = {};
+                    for (i = 0; i < results.length; i++) {
+                        dioceses[results[i]] = 1;
+                    }
+                    for (key in dioceses) {
+                        $('body').append(key + '<br />');
+                    }
+                });
+            }
+            function main3() {
+                $.get( "./diocese_original.html", function( data ) { 
+                    var expression, i, key, results, dioceses, line, 
+                        state, prefixLen, subLen, pos1, pos2, 
+                        dioceseLen, archLen, shortName, stateNumbers;
+                    expression = /(Diocese (\s|\.|[a-zA-Z])*)|(Archdiocese (\s|\.|[a-zA-Z])*)|"statename">(\s|[a-zA-Z])*</mg;
+                    results = data.match(expression);
+                    prefixLen = '"statename">'.length;
+                    dioceseLen = 'Diocese of '.length;
+                    archLen = 'Archdiocese of '.length;
+                    stateNumbers = {};
+                    i = 1;
+                    for (key in states) {
+                        stateNumbers[key] = [i++];
+                    }
+                    for (i = 0; i < results.length; i++) {
+                        line = results[i].trim();
+                        if (line.indexOf('\"') > -1) {  //It's a state name
+                            state = line.substr(prefixLen, line.length - (prefixLen+1));
+                        } 
+                        else {  //It's a diocese name                            
+                            pos1 = line.indexOf('Diocese of ');
+                            pos2 = line.indexOf('Archdiocese of ');
+                            if (pos1 > -1) {
+                                shortName = line.substr(dioceseLen);
+                            }
+                            else if (pos2 > -1) {
+                                shortName = line.substr(archLen);
+                            }
+                            else {
+                                shortName = line;
+                            }
+                            if (typeof state == 'string')
+                            {
+                                state = state.replace(' ', '_');
+                                state = stateNumbers[state];
+                            }
+                            $('body').append('full_name: "' + line + '", short_name: "' + shortName + '", state: ' + state + '<br />');
+                        }
+                    }
+                });
+            }
+            function main2() {
+                $.get( "./diocese_original.html", function( data ) { 
+                    var states, expression, key, results;
+                    body = $('body');
+                    states = $('table.state');
+                    $.each(states, function(key){
+                        var results, dioceses, i;
+                        expression = /(Diocese (\s|[a-zA-Z])*)|(Archdiocese (\s|[a-zA-Z])*)|"statename">(\s|[a-zA-Z])*</mg;
+                        results = states[key].html.match(expression);
+                        dioceses = {};
+                        for (i = 0; i < results.length; i++) {
+                            dioceses[results[i]] = 1;
+                        }
+                        for (key in dioceses) {
+                            $('body').append(key + '<br />');
+                        }
+                        });
+                });
+            }
+            main3();
+            //main2();
+        </script>
+    </body>
+</html>
