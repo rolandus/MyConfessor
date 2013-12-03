@@ -1,0 +1,14 @@
+<p>Please fill out the information below. We'll get in touch with you to verify your identity and then we'll email you an invitation to create your account. This usually takes about three days.</p>
+
+<form accept-charset="UTF-8" action="{{app_url}}/confessor_requests" id="new_confessor_request" method="post">
+    <fieldset>
+        <label for="confessor_request_first_name">First name</label>
+        <input id="confessor_request_first_name" name="confessor_request[first_name]" type="text" />
+        <label for="confessor_request_last_name">Last name</label>
+        <input id="confessor_request_last_name" name="confessor_request[last_name]" type="text" />
+        <label for="confessor_request_email">Email</label>
+        <input id="confessor_request_email" name="confessor_request[email]" type="email" />       
+        <label for="confessor_request_diocese">Diocese</label>
+        <select id="confessor_request_diocese_id" name="confessor_request[diocese_id]">{{dioceses}}</select>                   
+    </fieldset>     
+</form>

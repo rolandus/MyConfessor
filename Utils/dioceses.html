@@ -115,7 +115,7 @@
                                 state = state.replace(' ', '_');
                                 state = stateNumbers[state];
                             }
-                            $('body').append('full_name: "' + line + '", short_name: "' + shortName + '", state: ' + state + '<br />');
+                            $('body').append('Diocese.create(name: "' + shortName + '", full_name: "' + line + '", state_id: ' + state + ')<br />');
                         }
                     }
                 });
@@ -139,6 +139,16 @@
                         });
                 });
             }
+            function main4() {
+                var key, name, abbreviation, $body;
+                $body = $('body');
+                for (key in states) {
+                    name = key.replace('_', ' ');
+                    abbreviation = states[key];
+                    $body.append('State.create(name: "' + name + '", abbreviation: "' + abbreviation + '")<br />');
+                }
+            }
+            //main4();
             main3();
             //main2();
         </script>
