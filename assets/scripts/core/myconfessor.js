@@ -59,12 +59,12 @@ $$Utils.getHtmlForJSON = function $$Utils$getHtmlForJSON(dataQuery, template, ca
 			try {
 				templateHtml = template(dataWrapper);
 				if (isCacheable) { $$Cache[cacheKey] = templateHtml; }
+				callback(templateHtml);
 				if ($$DBG) { console.debug('$$Utils$getHtmlForJSON: Got html from template and executed callback for: ' + dataQuery); }
 			}
 			catch(ex) {
 				console.error('$$Utils$getHtmlForJSON: Problem populating template for: ' + dataQuery + '. ' + ex.message);
 			}
-			callback(templateHtml);
 		}, isCacheable);
 	}
 };
