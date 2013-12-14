@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>MyConfessor - Request an Account</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="./assets/scripts/external/handlebars.js"></script>
+    <script src="http://underscorejs.org/underscore.js"></script>
+    <script src="http://backbonejs.org/backbone-min.js"></script>
+</head>
+<body>
+<div id="content"></div>
+
+<script id="confessor_request_form_source" type="text/x-handlebars-template">
+    <p>Please fill out the information below. We'll get in touch with you to verify your identity and then we'll email you an invitation to create your account. This usually takes about three days.</p>
+    
+    <form accept-charset="UTF-8" action="{{settings.server_url}}/confessor_requests.json" id="new_confessor_request" method="post">
+        <fieldset>
+            <label for="confessor_request_first_name">First name</label>
+            <input id="confessor_request_first_name" name="confessor_request[first_name]" type="text" />
+            <label for="confessor_request_last_name">Last name</label>
+            <input id="confessor_request_last_name" name="confessor_request[last_name]" type="text" />
+            <label for="confessor_request_email">Email</label>
+            <input id="confessor_request_email" name="confessor_request[email]" type="email" />       
+            <label for="confessor_request_diocese">Diocese</label>
+            <select id="confessor_request_diocese_id" name="confessor_request[diocese_id]">
+            {{#each dioceses}}   
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}  
+            </select
+            <label for="confessor_request_state">State</label>
+            <select id="confessor_request_state_id" name="confessor_request[state_id]">
+            {{#each states}}   
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}  
+            </select
+        </fieldset>
+        <button type="submit" id="confessor_request_submit">Submit Request</button>
+    </form>
+</script>
+<script id="confessor_request_confirmation_source" type="text/x-handlebars-template">
+    <p>Your request has been submitted. We'll verify your information, and then send you an email. It could take up to three days.</p>
+</script>
+
+<script type="text/javascript">
+window.StateCollection = Backbone.Collection.extend({
+    url: 'http://localhost:3000/states.json',
+    is_ready: false
+});
+window.states = new StateCollection;
+
+//NOTE: These custom properties are showing up on __proto__, but not on the object itself. WHY???
+window.DioceseCollection = Backbone.Collection.extend({
+    url: 'http://localhost:3000/dioceses.json',
+    is_ready: false
+});
+window.dioceses = new DioceseCollection;
+    
+window.MainController = Backbone.View.extend({
+    timer_id: null,
+    
+    resources: [
+        window.states,
+        window.dioceses
+    ],
+
+    initialize: function() {
+        this.fetch_resources();
+        _.bindAll(this, 'go');
+        this.timer_id = window.setInterval('window.main.go()',300);
+    },
+    
+    fetch_resources: function() {
+        var i, resource;
+        for (i = 0; i < this.resources.length; i++) {
+            resource = this.resources[i];
+            resource.fetch({success: $.proxy(this.mark_as_ready, resource)});
+        }
+    },
+
+    go: function() {
+        if (this.resources_are_ready()) {
+            window.clearInterval(this.timer_id);
+            console.log('ready to go');
+            console.log(states);
+            console.log(dioceses);
+        } 
+    },
+    
+    resources_are_ready: function() {
+        var i, ready = true;
+        for (i = 0; i < this.resources.length && ready; i++) {
+            ready = ready && this.resources[i].is_ready;
+        }
+        return ready;
+    } ,
+    
+    //Executes in the context of the Collection (this == Collection)
+    mark_as_ready: function() {
+        this.is_ready = true;
+    },
+});
+window.main = new MainController;
+
+</script>
+</body>
+</html>
