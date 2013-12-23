@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>JS loading test</title>
+        <script src="assets/scripts/external/jquery-1.10.2.js"></script>
+    </head>
+    <body>
+        <script>
+            var wait = function(waitTime) {
+                var startTime = new Date(),
+                    endTime;
+                console.log("Waiting for " + waitTime + " seconds.");            
+                startTime = startTime.getTime();
+                do {
+                    endTime = new Date();
+                    endTime = endTime.getTime();
+                } while ((endTime - startTime) / 1000 < waitTime);
+                console.log("Done waiting.");
+            };
+            
+            //Give indication that the page has actually changed            
+            (function() { 
+                document.write(Math.random()); 
+            })();
+        </script>
+        
+        <script src="assets/scripts/test/delay2.js"></script>
+        
+        <h1 id="element1">First element</h1>
+        <img src="http://upload.wikimedia.org/wikipedia/commons/8/84/Claw-hammer.jpg" style="width:300px;" />
+        <h1 id="element2">Second element</h1>
+        <h1 id="element3">Third element</h1>
+
+        <script src="assets/scripts/test/delay1.js"></script>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>MyConfessor</title>
+    <script src="assets/scripts/external/jquery-1.10.2.js"></script>
+    <script src="assets/scripts/external/underscore.js"></script>
+    <script src="assets/scripts/external/backbone.js"></script>
+    <script src="assets/scripts/external/handlebars.js"></script>
+</head>
+    <body>        
+        <div id="banner"><img src="assets/images/banner.png" /></div>
+        <div id="header">
+        </div>
+        <div id="content">
+        </div>
+        <div id="footer">
+            <a href="/confessor_requests/new" class="icon_container" data-page="new_confessor_request">
+                <img src="assets/images/icon_chat.png" />
+                <span class="icon_label">Request an Account</span>
+            </a>
+            <a href="/confessor_requests" class="icon_container" data-page="confessor_requests">
+                <img src="assets/images/icon_chat.png" />
+                <span class="icon_label">Pending Requests</span>
+            </a>
+            <a href="/user_accounts" class="icon_container" data-page="user_accounts">
+                <img src="assets/images/icon_people.png" />
+                <span class="icon_label">Manage Accounts</span>
+            </a>
+            <a href="/user_accounts/sign_in" class="icon_container" data-page="sign_in">
+                <img src="assets/images/icon_lock.png" />
+                <span class="icon_label">Log In</span>
+            </a>
+            <a href="/user_accounts/sign_out" class="icon_container">
+                <img src="assets/images/icon_unlock.png" />
+                <span class="icon_label">Log Out</span>
+            </a>
+        </div>
+
+        <!-- Application Scripts ------------------------------------>
+        <script src="assets/scripts/core/myconfessor.js"></script>
+        <script src="assets/scripts/core/myconfessor_models.js"></script>
+        <script src="assets/scripts/controllers/myconfessor_admin.js"></script>
+        <script>
+            //Start the app!
+            $MC.mainView = new $MC.MainView();
+        </script>
+    </body>
+</html>
