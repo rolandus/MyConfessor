@@ -35,9 +35,41 @@
             </a>
         </div>
 
+
+        <!----------------------------------------------------------->
+        <!-- Templates (temporary until they can be pre-compiled) --->
+        <!----------------------------------------------------------->
+        
+        <!-- Confessor Requests List Page -->
+        <script id="confessor_requests_tpl" type="text/x-handlebars-template">
+            <h2>Account Requests</h2>
+            <ul>
+                {{#each items}}
+                <li>
+                    <h3>{{first_name}} {{last_name}} - {{deref diocese_id "dioceses" "name"}}, {{deref state_id "states" "abbreviation"}}</h3>
+                    <p>{{email}}</p>
+                    <form></form>
+                        <p><input id="verified_checkbox" type="checkbox"><label for="verified_checkbox">I have verified that this is really a priest, and that he requested this account.</label></p>
+                        <input type="button" value="Approve">
+                        <input type="button" value="Deny">
+                        <input type="button" value="Google Him">
+                </li>
+                {{/each}}
+            </ul>
+        </script>
+        
+        <script id="user_accounts_tpl" type="text/x-handlebars-template">
+            <h2>Existing Accounts</h2>
+            
+        </script>
+
+
+        <!----------------------------------------------------------->
         <!-- Application Scripts ------------------------------------>
+        <!----------------------------------------------------------->
         <script src="assets/scripts/core/myconfessor.js"></script>
         <script src="assets/scripts/core/myconfessor_models.js"></script>
+        <script src="assets/scripts/core/myconfessor_controllers.js"></script>
         <script src="assets/scripts/controllers/myconfessor_admin.js"></script>
         <script>
             //Start the app!

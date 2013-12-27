@@ -28,6 +28,14 @@ if(!window.console) {
 }
 
 /* ==================================================================
+ * DOM helpers
+ * ==================================================================
+ */
+$MC.layout_header = $("#header");
+$MC.layout_content = $("#content");
+$MC.layout_footer = $("#footer");
+
+/* ==================================================================
  * Handlebars helpers
  * ==================================================================
  */
@@ -41,7 +49,7 @@ if(!window.console) {
  *  @param {String} property The property whose value will be returned
  */
 Handlebars.registerHelper("deref", function(id, collection, property) {
-	return $MC[collection].get(id).attributes[property];
+	return $MC.collections[collection].get(id).attributes[property];
 });
 
 /**
@@ -60,10 +68,13 @@ $MC.Template = function(name, collection) {
 	if ($MC.settings.are_templates_precompiled) {
 		this.template = Handlebars.templates[name];
 	} else {
-		this.template = Handlebars.compile($("#" + this.name + "-template").html());
+		this.template = Handlebars.compile($("#" + this.name + "_tpl").html());
 	}
 };
 $MC.Template.prototype = {
+
+	collection: null,
+	
 	/**
 	 * Get the template HTML for the collection that was passed in at creation.
 	 * @return The HTML for this template.
