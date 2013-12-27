@@ -40,13 +40,18 @@
         <!-- Templates (temporary until they can be pre-compiled) --->
         <!----------------------------------------------------------->
         
+        <!-- Page container for the base PageView class -->
+        <script id="page_container_tpl" type="text/x-handlebars-template">
+            <div id="{{name}}_page" data-role="page" class="page_container"></div>
+        </script>
+
         <!-- Confessor Requests List Page -->
         <script id="confessor_requests_tpl" type="text/x-handlebars-template">
             <h2>Account Requests</h2>
             <ul>
                 {{#each items}}
                 <li>
-                    <h3>{{first_name}} {{last_name}} - {{deref diocese_id "dioceses" "name"}}, {{deref state_id "states" "abbreviation"}}</h3>
+                    <h3>{{first_name}} {{last_name}} - {{enum diocese_id "dioceses"}}, {{enum state_id "states" "abbreviation"}}</h3>
                     <p>{{email}}</p>
                     <form></form>
                         <p><input id="verified_checkbox" type="checkbox"><label for="verified_checkbox">I have verified that this is really a priest, and that he requested this account.</label></p>
@@ -58,11 +63,28 @@
             </ul>
         </script>
         
+        <!-- User Account List ------->
         <script id="user_accounts_tpl" type="text/x-handlebars-template">
             <h2>Existing Accounts</h2>
-            
+            <ul>
+                {{#each items}}
+                <li>
+                    <a href="/user_account/{{id}}" data-page="user_account" data-record-id="{{id}}"><h3>{{first_name}} {{last_name}}</h3></a>
+                </li>
+                {{/each}}
+            </ul>
         </script>
 
+        <!-- A single user account ------->
+        <script id="user_account_tpl" type="text/x-handlebars-template">
+            Hello.
+            <h2>{{first_name}} {{last_name}}</h2>
+            <p>{{username}}</p>
+            <p>Status: {{enum account_status_id "account_statuses"}}</p>
+            <p>Mobile phone: {{mobile_phone}}</p>
+            <p>Home phone: {{home_phone}}</p>
+            <p>Work phone: {{work_phone}}</p>
+        </script>
 
         <!----------------------------------------------------------->
         <!-- Application Scripts ------------------------------------>

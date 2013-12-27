@@ -29,14 +29,49 @@ $MC.JSONCollection = Backbone.Collection.extend({
     }   
 });
 
-$MC.collections = {};
+//=============================================================
+//===== Static Collections (enums)
+//=============================================================
+$MC.enums = {};
 /**
- * The collection of states
+ * The collection of account roles
  */
-$MC.StateCollection = $MC.JSONCollection.extend({
-    data_url: "states"
+$MC.AccountRoleCollection = $MC.JSONCollection.extend({
+    data_url: "account_roles"
 });
-$MC.collections.states = new $MC.StateCollection();
+$MC.enums.account_roles = new $MC.AccountRoleCollection();
+
+/**
+ * The collection of account statuses
+ */
+$MC.AccountStatusCollection = $MC.JSONCollection.extend({
+    data_url: "account_statuses"
+});
+$MC.enums.account_statuses = new $MC.AccountStatusCollection();
+
+/**
+ * The collection of confession statuses
+ */
+$MC.ConfessionStatusCollection = $MC.JSONCollection.extend({
+    data_url: "confession_statuses"
+});
+$MC.enums.confession_statuses = new $MC.ConfessionStatusCollection();
+
+/**
+ * The collection of confessor offices
+ */
+$MC.ConfessorOfficeCollection = $MC.JSONCollection.extend({
+    data_url: "confessor_offices"
+});
+$MC.enums.confessor_offices = new $MC.ConfessorOfficeCollection();
+
+/**
+ * The collection of confessor request statuses
+ */
+$MC.ConfessorRequestStatusesCollection = $MC.JSONCollection.extend({
+    data_url: "confessor_request_statuses"
+});
+$MC.enums.confessor_request_statuses = new $MC.ConfessorRequestStatusesCollection();
 
 /**
  * The collection of dioceses
@@ -44,15 +79,43 @@ $MC.collections.states = new $MC.StateCollection();
 $MC.DioceseCollection = $MC.JSONCollection.extend({
     data_url: "dioceses"
 });
-$MC.collections.dioceses = new $MC.DioceseCollection();
+$MC.enums.dioceses = new $MC.DioceseCollection();
 
+/**
+ * The collection of states
+ */
+$MC.StateCollection = $MC.JSONCollection.extend({
+    data_url: "states"
+});
+$MC.enums.states = new $MC.StateCollection();
+
+//=============================================================
+//===== Dynamic Collections (data)
+//=============================================================
+$MC.data = {};
 /**
  * The collection of confessor requests
  */
 $MC.ConfessorRequestCollection = $MC.JSONCollection.extend({
     data_url: "confessor_requests"
 });
-$MC.collections.confessor_requests = new $MC.ConfessorRequestCollection();
+$MC.data.confessor_requests = new $MC.ConfessorRequestCollection();
+
+/**
+ * The collection of confessors
+ */
+$MC.ConfessorCollection = $MC.JSONCollection.extend({
+    data_url: "confessors"
+});
+$MC.data.confessors = new $MC.ConfessorCollection();
+
+/**
+ * The collection of confession locations
+ */
+$MC.ConfessionLocationCollection = $MC.JSONCollection.extend({
+    data_url: "confession_locations"
+});
+$MC.data.confession_locations = new $MC.ConfessionLocationCollection();
 
 /**
  * The collection of user accounts
@@ -60,7 +123,8 @@ $MC.collections.confessor_requests = new $MC.ConfessorRequestCollection();
 $MC.UserAccountCollection = $MC.JSONCollection.extend({
     data_url: "user_accounts"
 });
-$MC.collections.user_accounts = new $MC.UserAccountCollection();
+$MC.data.user_accounts = new $MC.UserAccountCollection();
+
 
 })(); //End closure
 

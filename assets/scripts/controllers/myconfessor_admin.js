@@ -8,18 +8,24 @@
  * Confessor request list view controller
  */
 $MC.ConfessorRequestsView = $MC.ListPageView.extend({
-	//List of current confessor requests
-    collection: $MC.collections.confessor_requests,
-    template: new $MC.Template("confessor_requests")
+    name: "confessor_requests",
+    collection: $MC.data.confessor_requests
 });
 
 /**
  * User account list view controller
  */
 $MC.UserAccountsView = $MC.ListPageView.extend({
-	//List of current confessor requests
-    collection: $MC.collections.user_accounts,
-    template: new $MC.Template("user_accounts")
+    name: "user_accounts",
+    collection: $MC.data.user_accounts
+});
+
+/**
+ * A single user account view
+ */
+$MC.UserAccountView = $MC.ModelPageView.extend({
+	name: "user_account",
+	collection: $MC.data.user_accounts
 });
 
 /**
@@ -31,19 +37,15 @@ $MC.MainView = Backbone.View.extend({
     // Properties
     //======================================
 
-    //All the stuff that needs to be fetched from the server at app startup.
-    static_collections: {
-        states: $MC.collections.states,
-        dioceses: $MC.collections.dioceses
-    },
-    
     controllers: {
     	constructors: {
-    		confessor_requests: $MC.ConfessorRequestsView,
-    		user_accounts: $MC.UserAccountsView
+    		confessor_requests: $MC.ConfessorRequestsView,  //List of confessor requests
+    		user_accounts: $MC.UserAccountsView,            //List of user accounts
+    		user_account: $MC.UserAccountView               //A single user account
     	},
     	confessor_requests: null,
-    	user_accounts: null
+    	user_accounts: null,
+    	user_account: null
     },
     
     
@@ -52,14 +54,15 @@ $MC.MainView = Backbone.View.extend({
     //======================================
     
     initialize: function() {
-        this.fetchStaticCollections();
-        this.startStaticCollectionsListener();
+        this.fetchEnums();
+        this.startEnumFetchListener();
         this.activateLinks();  //Wire up the page links to be all crazy-like.
     },
     
     start: function() {
-        console.debug(this.static_collections.states);
-        console.debug(this.static_collections.dioceses);
+        $.each($MC.enums, function() {
+            console.debug(this);
+        });
     },
     
     /**
@@ -67,36 +70,40 @@ $MC.MainView = Backbone.View.extend({
      * them to render pages using DOM injection rather than postbacks.
      */
     activateLinks: function() {
-		$("a[data-page]").bind("click", $.proxy(function(event) {
-			var page = event.currentTarget.getAttribute('data-page'); //The event target is only being the link when you click in a very specific spot;
+		$("body").delegate("a[data-page]", "click", $.proxy(function(event) {
+			var target    = event.currentTarget, //The event target is only being the link when you click in a very specific spot;
+				info      = {};
+			info.page = target.getAttribute("data-page"),
+			info.record_id = target.getAttribute("data-record-id");
 			event.preventDefault();
 			event.stopPropagation();
-			this.navigateToPage(page);
+			this.navigateToPage(info);
 		}, this));
     },
     
     /**
      * Called to change to a specific page within the app.
-     *  @param page - The name of the page to navigate to.
+     *  @param {Object} info Hash of options (page, record_id)
      */
-    navigateToPage: function(page) {
-    	var controller = this.getControllerFor(page);
+    navigateToPage: function(info) {
+    	var controller = this.getControllerFor(info);
     	if (this.current_controller) {
     		this.current_controller.hide();
     	}
     	this.current_controller = controller;
-    	this.current_controller.show();
+    	this.current_controller.show(info);
     },
     
     /**
      * Get the specfied controller and create it if it doesn't exist.
-     *  @param page - The name of the page to get the controller for.
-     *  @return - The controller for the specified page.
+     *  @param {Object} info Hash of options (page, record_id)
+     *  @return The controller for the specified page.
      */
-    getControllerFor: function(page) {
-    	var controller = this.controllers[page];    	
-    	if (!this.controller) {
-    		controller = this.controllers[page] = new this.controllers.constructors[page]();
+    getControllerFor: function(info) {
+    	var controller = this.controllers[info.page];    	
+    	if (!controller) {
+    		console.debug("Creating controller for: " + info.page);
+    		controller = this.controllers[info.page] = new this.controllers.constructors[info.page]({ record_id: info.record_id });
     	}
     	return controller;
     },
@@ -104,10 +111,10 @@ $MC.MainView = Backbone.View.extend({
     /**
      * Starts polling to figure out when the static data is loaded.
      */
-    startStaticCollectionsListener: function() {
-        this.static_collections_timer = window.setInterval($.proxy(function() {
-            if (this.staticCollectionsAreReady()) {
-                window.clearInterval(this.static_collections_timer);
+    startEnumFetchListener: function() {
+        this._fetch_timer = window.setInterval($.proxy(function() {
+            if (this.enumsAreFetched()) {
+                window.clearInterval(this._fetch_timer);
                 this.start();
             } 
         }, this), $MC.settings.data_polling_interval);
@@ -116,9 +123,9 @@ $MC.MainView = Backbone.View.extend({
     /**
      * @return True if all the static data is loaded; False otherwise.
      */
-    staticCollectionsAreReady: function() {
+    enumsAreFetched: function() {
         var ready = true;
-        $.each(this.static_collections, function() {
+        $.each($MC.enums, function() {
             ready = ready && this.length > 0;
         });
         return ready;
@@ -127,8 +134,8 @@ $MC.MainView = Backbone.View.extend({
     /**
      * Fetch the data for all the collections listed as "static" data.
      */
-    fetchStaticCollections: function() {
-        $.each(this.static_collections, function() {
+    fetchEnums: function() {
+        $.each($MC.enums, function() {
             this.fetch();
         });
     }
