@@ -13,6 +13,13 @@ $MC.ConfessorRequestsView = $MC.ListPageView.extend({
 });
 
 /**
+ * Confessor Request creation page
+ */
+$MC.NewConfessorRequestView = $MC.BasicPageView.extend({
+	name: "new_confessor_request",
+});
+
+/**
  * User account list view controller
  */
 $MC.UserAccountsView = $MC.ListPageView.extend({
@@ -29,6 +36,16 @@ $MC.UserAccountView = $MC.ModelPageView.extend({
 });
 
 /**
+ * User account editing page
+ */
+$MC.EditUserAccountView = $MC.ModelPageView.extend({
+	name: "edit_user_account",
+	collection: $MC.data.user_accounts
+});
+
+
+
+/**
  * Main application controller
  */
 $MC.MainView = Backbone.View.extend({
@@ -40,12 +57,18 @@ $MC.MainView = Backbone.View.extend({
     controllers: {
     	constructors: {
     		confessor_requests: $MC.ConfessorRequestsView,  //List of confessor requests
+    		new_confessor_request: $MC.NewConfessorRequestView, //Confessor request creation page
+    		
     		user_accounts: $MC.UserAccountsView,            //List of user accounts
-    		user_account: $MC.UserAccountView               //A single user account
+    		user_account: $MC.UserAccountView,              //A single user account
+    		edit_user_account: $MC.EditUserAccountView,     //Edit a user account
     	},
     	confessor_requests: null,
+    	new_confessor_request: null,
+
     	user_accounts: null,
-    	user_account: null
+    	user_account: null,
+    	edit_user_account: null,
     },
     
     

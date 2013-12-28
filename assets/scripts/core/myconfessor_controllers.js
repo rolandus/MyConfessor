@@ -72,6 +72,24 @@ $MC.PageView = Backbone.View.extend({
     }
 });
 
+/**
+ * Base controller for a basic page that has no model binding
+ */
+$MC.BasicPageView = $MC.PageView.extend({
+	
+	render: function() {
+		$MC.PageView.prototype.render.apply(this, arguments);
+		this._is_rendered = true;
+	},
+	
+	show: function() {
+		if (!this._is_rendered) {
+			this.render();
+		}
+		$MC.PageView.prototype.show.apply(this, arguments);
+	}
+});
+
 
 /**
  * Base controller for a page that shows a list of items (a collection-based page)

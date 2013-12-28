@@ -67,6 +67,18 @@ Handlebars.registerHelper("record", function(id, collection, property) {
 });
 
 /**
+ * Handlebars helper used to iterate over one of the enum values.
+ *  @param {String} enumName The name of the enum collection to iterate over.
+ */
+Handlebars.registerHelper("iterateEnum", function(enumName, options) {
+	var retVal;
+	$MC.enums[enumName].forEach(function(item) {
+		retVal = retVal + options.fn(item.attributes);
+	});
+	return retVal;
+});
+
+/**
  * Template helper - abstracts the fact that the templates may
  * or may not be precompiled. If the scripts are not precompiled,
  * it assumes that each template lives in its own script tag
@@ -108,7 +120,7 @@ $MC.Template.prototype = {
 				context = { items: this.collection.toJSON() };
 			}
 		} else {
-			throw "No collection specified for this template.";
+			context = {};
 		}
 		return this.template(context);
 	},

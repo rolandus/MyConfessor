@@ -77,14 +77,90 @@
 
         <!-- A single user account ------->
         <script id="user_account_tpl" type="text/x-handlebars-template">
-            Hello.
             <h2>{{first_name}} {{last_name}}</h2>
             <p>{{username}}</p>
             <p>Status: {{enum account_status_id "account_statuses"}}</p>
             <p>Mobile phone: {{mobile_phone}}</p>
             <p>Home phone: {{home_phone}}</p>
             <p>Work phone: {{work_phone}}</p>
+            <a href="user_account/{{id}}/edit" data-page="edit_user_account" data-record-id="{{id}}">Edit</a>
         </script>
+        
+        <!-- Confessor Request Form ------>
+        <script id="new_confessor_request_tpl" type="text/x-handlebars-template">
+            <h2>Request an Account</h2>
+            <form accept-charset="UTF-8" action="/confessor_requests" id="new_confessor_request" method="post">
+                <!-- div style="margin:0;padding:0;display:inline">
+                    <input name="utf8" type="hidden" value="✓">
+                    <input name="authenticity_token" type="hidden" value="pVW/AvMsGUYohv9SVJZPjE6OuMePYcmW97Ft0YfMBMg=">
+                </div -->
+                <p>Fill out the fields below. We'll verify your identity and then send you an email with a link to complete the signup process. This usually takes about three days.</p>
+                <div class="field">
+                    <label for="confessor_request_first_name">First name</label><br>
+                    <input id="confessor_request_first_name" name="confessor_request[first_name]" type="text">
+                </div>
+                <div class="field">
+                    <label for="confessor_request_last_name">Last name</label><br>
+                    <input id="confessor_request_last_name" name="confessor_request[last_name]" type="text">
+                </div>
+                <div class="field">
+                    <label for="confessor_request_email">Email</label><br>
+                    <input id="confessor_request_email" name="confessor_request[email]" type="text">
+                </div>
+                <div class="field">
+                    <label for="confessor_request_diocese">Diocese</label><br>
+                    <select id="confessor_request_diocese_id" name="confessor_request[diocese_id]">
+                        {{#iterateEnum "dioceses"}}<option value="{{id}}">{{name}}</option>{{/iterateEnum}}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="confessor_request_state">State</label><br>
+                    <select id="confessor_request_state_id" name="confessor_request[state_id]">
+                        {{#iterateEnum "states"}}<option value="{{id}}">{{name}}</option>{{/iterateEnum}}
+                    </select>
+                </div>
+                <div class="actions">
+                    <input name="commit" type="submit" value="Submit Request">
+                </div>
+            </form>
+        </script>
+        
+        <script id="edit_user_account_tpl" type="text/x-handlebars-template">
+            <h2>Editing {{first_name}} {{last_name}}</h2>
+            <form accept-charset="UTF-8" action="/user_accounts" id="edit_user_account" method="post">
+                <!-- div style="margin:0;padding:0;display:inline">
+                    <input name="utf8" type="hidden" value="✓">
+                    <input name="authenticity_token" type="hidden" value="pVW/AvMsGUYohv9SVJZPjE6OuMePYcmW97Ft0YfMBMg=">
+                </div -->
+                <div class="field">
+                    <label for="confessor_request_first_name">First name</label><br>
+                    <input id="confessor_request_first_name" name="confessor_request[first_name]" type="text">
+                </div>
+                <div class="field">
+                    <label for="confessor_request_last_name">Last name</label><br>
+                    <input id="confessor_request_last_name" name="confessor_request[last_name]" type="text">
+                </div>
+                <div class="field">
+                    <label for="confessor_request_email">Email</label><br>
+                    <input id="confessor_request_email" name="confessor_request[email]" type="text">
+                </div>
+                <div class="field">
+                    <label for="confessor_request_diocese">Diocese</label><br>
+                    <select id="confessor_request_diocese_id" name="confessor_request[diocese_id]">
+                        {{#iterateEnum "dioceses"}}<option value="{{id}}">{{name}}</option>{{/iterateEnum}}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="confessor_request_state">State</label><br>
+                    <select id="confessor_request_state_id" name="confessor_request[state_id]">
+                        {{#iterateEnum "states"}}<option value="{{id}}">{{name}}</option>{{/iterateEnum}}
+                    </select>
+                </div>
+                <div class="actions">
+                    <input name="commit" type="submit" value="Submit Request">
+                </div>
+            </form>
+        </script>        
 
         <!----------------------------------------------------------->
         <!-- Application Scripts ------------------------------------>
