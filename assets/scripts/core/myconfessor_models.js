@@ -7,13 +7,12 @@
 /**
  * Generic Model to serialize and submit a form as JSON.
  */
-$MC.Form = Backbone.Model.extend();
-$MC.Form.prototype.serialize = function($form) {
-	this.$form = $form;
-	this.urlRoot = $form.attr("action");
-	this.set($form.serializeToJSON());
+$MC.Form = Backbone.Model.extend(); //The reason we are not setting properties using the 'extend' function is that the properties (e.g. $form) get included as 'attributes' of the model, which we don't want.
+$MC.Form.prototype.compile = function($form) {
+	this.$form = $form; 
+	this.urlRoot = $MC.settings.server_url + $form.attr("action");
+	this.set($form.compile());
 };
-
 
 /**
  * Base collection for everything fetched as JSON. For now, it's just used to construct the URL.

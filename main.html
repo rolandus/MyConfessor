@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>MyConfessor</title>
@@ -89,7 +90,7 @@
         <!-- Confessor Request Form ------>
         <script id="new_confessor_request_tpl" type="text/x-handlebars-template">
             <h2>Request an Account</h2>
-            <form accept-charset="UTF-8" action="/confessor_requests" id="new_confessor_request" method="post">
+            <form accept-charset="UTF-8" action="/confessor_requests" id="new_confessor_request_form" method="post">
                 <!-- div style="margin:0;padding:0;display:inline">
                     <input name="utf8" type="hidden" value="✓">
                     <input name="authenticity_token" type="hidden" value="pVW/AvMsGUYohv9SVJZPjE6OuMePYcmW97Ft0YfMBMg=">
@@ -120,9 +121,12 @@
                     </select>
                 </div>
                 <div class="actions">
-                    <input name="commit" type="submit" value="Submit Request">
+                    <input id="new_confessor_request_commit" name="commit" type="submit" value="Submit Request">
                 </div>
             </form>
+            <div class="submit_ok" style="display: none;">
+                <p>Thanks! We'll be in touch shortly to verify your request.</p>
+            </div>
         </script>
         
         <script id="edit_user_account_tpl" type="text/x-handlebars-template">

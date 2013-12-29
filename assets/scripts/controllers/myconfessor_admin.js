@@ -16,7 +16,30 @@ $MC.ConfessorRequestsView = $MC.ListPageView.extend({
  * Confessor Request creation page
  */
 $MC.NewConfessorRequestView = $MC.BasicPageView.extend({
+	
 	name: "new_confessor_request",
+	
+	initialize: function() {
+		$MC.BasicPageView.prototype.initialize.apply(this, arguments);
+		_.bindAll(this, "showOk");
+	},
+	
+	events: {
+		"click #new_confessor_request_commit": "submitRequest"
+	},
+	
+	submitRequest: function(event) {
+		var form;
+		event.preventDefault();
+		form = new $MC.Form();
+		form.compile($("#new_confessor_request_form"));
+		form.save({ success: showOk });
+	},
+	
+	showOk: function() {
+		$("#new_confessor_request_form").hide();
+		$("#submit_ok").show();
+	}
 });
 
 /**

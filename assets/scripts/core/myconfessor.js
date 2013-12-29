@@ -135,5 +135,52 @@ $MC.Template.prototype = {
 	}
 };
 
+/* ==================================================================
+ * JQuery helpers
+ * ==================================================================
+ */
+
+/**
+ * Attach a function to the jQuery object to handle gathering the form elements into a object.
+ * @return An Object representing the contents of the form.
+ */
+$.fn.compile = function() {
+    var retVal = {};
+    $.each(this.serializeArray(), function() {  //Use jquery to get all the name/value pairs
+    	var name = this.name,
+    		pos  = name.indexOf("["),
+    		model, 
+    		property,
+    		obj,
+    		valueType;
+
+		//Ensure existence of the object to which the property belongs
+    	if (pos > -1) {  //Deal with rails-style form element names, like model[property].
+    		model = name.substring(0, pos);
+    		property = name.substring(pos+1, name.length-1);
+    		if (typeof retVal[model] === "undefined") {
+    			retVal[model] = { };
+    		}
+    		obj = retVal[model];
+    	} else {
+    		obj = retVal;
+    		property = name;
+    	}
+    	
+    	//Add the value to the property
+    	valueType = typeof obj[property];
+    	if (valueType === "undefined") {  //Value didn't exist
+    		obj[property] = this.value;
+    	} else if (valueType === "array") {  //Value exists and is already an array
+			obj[property].push(this.value);
+		} else {  //Value exists and needs to be converted into an array
+			obj[property] = [ obj[property] ];
+			obj[property].push(this.value);	
+		}
+    });
+    return retVal;
+};
+
+
 })(); //End closure
 

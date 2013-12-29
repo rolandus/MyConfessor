@@ -12,7 +12,7 @@ $MC.PageView = Backbone.View.extend({
 	//Mandatory overrides. These must be overriden by the subclass.
 	name: null,        //Name of this page. For example: "confessor_requests"
 	
-	//Optional overrides. This can overridden if desired.
+	//Optional overrides. This can overridden if desired. Default is to look up the template using 'name' above.
 	template: null,    //Template to use for this page
 
 	//"Private" properties
@@ -23,6 +23,9 @@ $MC.PageView = Backbone.View.extend({
 	 */
 	initialize: function() {
 		var $element, template, id;
+		
+		//Call superconstructor
+		Backbone.View.prototype.initialize.apply(this, arguments);
     	
     	//Sanity checks
     	if (!this.name) { throw "A name is required to create a PageView."; }
